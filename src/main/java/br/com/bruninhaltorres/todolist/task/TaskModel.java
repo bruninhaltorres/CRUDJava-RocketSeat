@@ -21,16 +21,24 @@ public class TaskModel {
     
     private String description;
     
-    @Column(length = 50) //Limitando o numero de caracteres dessa coluna.
+    @Column(length = 50) // Limitando o numero de caracteres dessa coluna.
     private String title;
     private String priotity;
     
     private LocalDateTime startAt;
     private LocalDateTime endAt;
     
-    private UUID idUser; //Vai associar o usuária a tarefa
+    private UUID idUser; // Vai associar o usuária a tarefa
     
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    // 
+    public void setTitle(String title) throws Exception {
+        if(title.length() > 50){
+            throw new Exception("O campo tem que conter no máximo 50 caracteres");
+        }
+        this.title = title;
+    }
     
 }
