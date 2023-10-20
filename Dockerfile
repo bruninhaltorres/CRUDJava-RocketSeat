@@ -17,7 +17,7 @@ FROM openjdk:17-jdk-slim
 EXPOSE 8080
 
 # Copie o arquivo JAR do estágio de compilação
-COPY --from=build /app/target/todolist-0.0.1.jar /app.jar
+COPY --from=build /target/todolist-0.0.1.jar /app.jar
 
 # Defina o ponto de entrada para executar o aplicativo
 ENTRYPOINT ["java", "-jar", "/app.jar"]
