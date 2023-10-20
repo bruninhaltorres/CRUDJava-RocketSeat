@@ -2,13 +2,15 @@
 FROM ubuntu:latest AS build
 
 # Atualize os pacotes e instale o JDK
-RUN apt-get update && apt-get install -y openjdk-17-jdk
+RUN apt-get update
+RUN apt-get install -y openjdk-17-jdk
 
 # Copie o código-fonte do aplicativo para o contêiner
-COPY . /app
+COPY . .
 
 # Instale o Maven e compile o projeto
-RUN apt-get install -y maven && cd /app && mvn clean install
+RUN apt-get install -y maven 
+RUN mvn clean install
 
 # Defina a imagem final para execução
 FROM openjdk:17-jdk-slim
