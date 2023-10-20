@@ -12,6 +12,6 @@ FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=buid /target/todolist-1.0.0.jar app.jar
+COPY --from=buid /target/todolist-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
