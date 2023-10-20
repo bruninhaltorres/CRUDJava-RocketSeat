@@ -1,17 +1,23 @@
-FROM ubunto:lastest AS build
+# Defina a imagem base para construção
+FROM ubuntu:latest AS build
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+# Atualize os pacotes e instale o JDK
+RUN apt-get update && apt-get install -y openjdk-17-jdk
 
-COPY . .
+# Copie o código-fonte do aplicativo para o contêiner
+COPY . /app
 
-RUN apt-get install maven -y
-RUN mvn clean install
+# Instale o Maven e compile o projeto
+RUN apt-get install -y maven && cd /app && mvn clean install
 
+# Defina a imagem final para execução
 FROM openjdk:17-jdk-slim
 
+# Exponha a porta 8080
 EXPOSE 8080
 
-COPY --from=buid /target/todolist-0.0.1.jar app.jar
+# Copie o arquivo JAR do estágio de compilação
+COPY --from=build /app/target/todolist-0.0.1.jar /app.jar
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Defina o ponto de entrada para executar o aplicativo
+ENTRYPOINT ["java", "-jar", "/app.jar"]
